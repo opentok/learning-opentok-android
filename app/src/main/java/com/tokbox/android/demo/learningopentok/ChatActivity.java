@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -21,9 +24,10 @@ import com.opentok.android.OpentokError;
 
 public class ChatActivity extends ActionBarActivity implements WebServiceCoordinator.Listener,
         Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.SubscriberListener,
-        Session.SignalListener{
+        View.OnClickListener, Session.SignalListener{
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
+    public static final String SIGNAL_TYPE_CHAT = "chat";
 
     private WebServiceCoordinator mWebServiceCoordinator;
 
@@ -36,6 +40,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     private FrameLayout mPublisherViewContainer;
     private FrameLayout mSubscriberViewContainer;
+    private Button mSendButton;
+    private EditText mMessageEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,11 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
         mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
+        mSendButton = (Button)findViewById(R.id.send_button);
+        mMessageEditText = (EditText)findViewById(R.id.message_edit_text);
+
+        // Attach handlers to UI
+        mSendButton.setOnClickListener(this);
 
         // initialize WebServiceCoordinator and kick off request for necessary data
         mWebServiceCoordinator = new WebServiceCoordinator(this, this);
@@ -87,6 +98,28 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         mPublisherViewContainer.addView(mPublisher.getView());
     }
 
+    private void sendMessage() {
+        disableMessageViews();
+        mSession.sendSignal(SIGNAL_TYPE_CHAT, mMessageEditText.getText().toString());
+        mMessageEditText.setText("");
+        enableMessageViews();
+    }
+
+    private void disableMessageViews() {
+        mMessageEditText.setEnabled(false);
+        mSendButton.setEnabled(false);
+    }
+
+    private void enableMessageViews() {
+        mMessageEditText.setEnabled(true);
+        mSendButton.setEnabled(true);
+    }
+
+    private void showMessage(String message) {
+        Toast toast = Toast.makeText(this, getString(R.string.message_toast_label, message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     private void logOpenTokError(OpentokError opentokError) {
         Log.e(LOG_TAG, "Error Domain: " + opentokError.getErrorDomain().name());
         Log.e(LOG_TAG, "Error Code: " + opentokError.getErrorCode().name());
@@ -119,12 +152,14 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
             mSession.publish(mPublisher);
         }
 
-        mSession.sendSignal("", "Hello, Signaling!");
+        enableMessageViews();
     }
 
     @Override
     public void onDisconnected(Session session) {
         Log.i(LOG_TAG, "Session Disconnected");
+
+        disableMessageViews();
     }
 
     @Override
@@ -191,11 +226,23 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         logOpenTokError(opentokError);
     }
 
+    /* OnClick Listener methods */
+
+    @Override
+    public void onClick(View v) {
+        if (v.equals(mSendButton)) {
+            sendMessage();
+        }
+    }
+
     /* Signal Listener methods */
 
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
-        Toast toast = Toast.makeText(this, data, Toast.LENGTH_LONG);
-        toast.show();
+        switch (type) {
+            case SIGNAL_TYPE_CHAT:
+                showMessage(data);
+                break;
+        }
     }
 }
