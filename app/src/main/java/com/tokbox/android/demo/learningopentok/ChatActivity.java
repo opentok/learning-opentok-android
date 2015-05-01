@@ -11,12 +11,14 @@ import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
+import com.opentok.android.Subscriber;
+import com.opentok.android.SubscriberKit;
 import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
 
 
 public class ChatActivity extends ActionBarActivity implements WebServiceCoordinator.Listener,
-        Session.SessionListener, PublisherKit.PublisherListener {
+        Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.SubscriberListener {
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
 
@@ -27,8 +29,10 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private String mToken;
     private Session mSession;
     private Publisher mPublisher;
+    private Subscriber mSubscriber;
 
     private FrameLayout mPublisherViewContainer;
+    private FrameLayout mSubscriberViewContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         setContentView(R.layout.activity_chat);
 
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
+        mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
 
         // initialize WebServiceCoordinator and kick off request for necessary data
         mWebServiceCoordinator = new WebServiceCoordinator(this, this);
@@ -119,11 +124,24 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     @Override
     public void onStreamReceived(Session session, Stream stream) {
         Log.i(LOG_TAG, "Stream Received");
+
+        if (mSubscriber == null) {
+            mSubscriber = new Subscriber(this, stream);
+            mSubscriber.setSubscriberListener(this);
+            mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
+                    BaseVideoRenderer.STYLE_VIDEO_FILL);
+            mSession.subscribe(mSubscriber);
+        }
     }
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
         Log.i(LOG_TAG, "Stream Dropped");
+
+        if (mSubscriber != null) {
+            mSubscriber = null;
+            mSubscriberViewContainer.removeAllViews();
+        }
     }
 
     @Override
@@ -145,6 +163,25 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {
+        logOpenTokError(opentokError);
+    }
+
+    /* Subscriber Listener methods */
+
+    @Override
+    public void onConnected(SubscriberKit subscriberKit) {
+        Log.i(LOG_TAG, "Subscriber Connected");
+
+        mSubscriberViewContainer.addView(mSubscriber.getView());
+    }
+
+    @Override
+    public void onDisconnected(SubscriberKit subscriberKit) {
+        Log.i(LOG_TAG, "Subscriber Disconnected");
+    }
+
+    @Override
+    public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
         logOpenTokError(opentokError);
     }
 }
