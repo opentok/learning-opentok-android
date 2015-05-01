@@ -78,6 +78,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private void initializePublisher() {
         mPublisher = new Publisher(this);
         mPublisher.setPublisherListener(this);
+        mPublisher.setCapturer(new NoiseVideoCapturer(320, 240));
         mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
         mPublisherViewContainer.addView(mPublisher.getView());
