@@ -55,10 +55,10 @@ signaling API.
   camera) as the video source for a published stream.
 
 
-## 0: Starting Point
+## basics.step-1: Starting Point
 
-The basics.step-1 branch includes a basic Android application. Complete the following steps to get it
-running in Android Studio (and to add the OpenTok Android SDK):
+The basics.step-1 branch includes a basic Android application. Complete the following steps to get
+it running in Android Studio (and to add the OpenTok Android SDK):
 
 1. In Android Studio, select the File > Import Project command. Navigate to the root directory of
    this project, select the build.gradle file, and then click the OK button. The project opens in a
@@ -85,7 +85,7 @@ running in Android Studio (and to add the OpenTok Android SDK):
    For a list of supported devices, see the "Developer and client requirements"
    on [this page] [1].
 
-## 1: Creating a session and defining archive REST API calls (server side)
+## basics.step-2: Creating a session and defining archive REST API calls (server side)
 
 Before you can test the application, you need to set up a web service to handle some
 OpenTok-related API calls. The web service securely creates an OpenTok session.
@@ -109,7 +109,7 @@ Download the repo and run its code on a PHP-enabled web server,
 The HTTP POST request to the /service endpoint returns a response that includes the OpenTok
 session ID and token.
 
-## 2: Generating a token (server side)
+## basics.step-3: Generating a token (server side)
 
 The web service also creates a token that the client uses to connect to the OpenTok session.
 The HTTP GET request to the /service endpoint returns a response that includes the OpenTok
@@ -121,7 +121,7 @@ use tokens, causing streaming minutes to be charged to your OpenTok developer ac
 it is a best practice to use an HTTPS URL for the web service that returns an OpenTok token,
 so that it cannot be intercepted and misused.
 
-## 3: Connecting to the session
+## basics.step-4: Connecting to the session
 
 The code for this section is added in the basics.step-4 branch of the repo.
 
@@ -174,7 +174,7 @@ Finally, the `connect(token)` method of the Session object connects the app to t
 You must connect before sending or receiving audio-video streams in the session (or before
 interacting with the session in any way).
 
-## 4: Publishing an audio video stream to the session
+## basics.step-5: Publishing an audio video stream to the session
 
 The code for this section is added in the basics.step-5 branch of the repo.
 
@@ -267,7 +267,7 @@ If the publisher stops sending its stream to the session, the implementation of 
         Log.i(LOG_TAG, "Publisher Stream Destroyed");
     }
 
-## 5: Subscribing to another client's audio-video stream
+## basics.step-6: Subscribing to another client's audio-video stream
 
 The code for this section is added in the basics.step-6 branch of the repo.
 
