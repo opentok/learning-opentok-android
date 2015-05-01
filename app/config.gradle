@@ -1,0 +1,3 @@
+// Replace the chatServerUrl with the root of the domain where your chat server is hosted.
+// Do not include the trailing slash.
+project.ext.chatServerUrl = "https://swartz-learning-opentok-php.herokuapp.com"

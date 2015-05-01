@@ -1,0 +1,12 @@
+.gradle
+local.properties
+build/
+.DS_Store
+
+# Ignoring all IDE files is better for sample code purposes
+.idea
+*.iml
+
+# Typical project recommendations from JetBrains
+#.idea/workspace.xml
+#.idea/tasks.xml
