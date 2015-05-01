@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.opentok.android.Session;
@@ -34,6 +36,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private FrameLayout mPublisherViewContainer;
     private FrameLayout mSubscriberViewContainer;
 
+    private WebView mScreensharedView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,13 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
         mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
+        mScreensharedView = (WebView)findViewById(R.id.screenshared_view);
+        // In order to access pixels data, we need the view to be software renderer
+        // If view is renderer using GL backed source, we won't be able to access to its pixels
+        // so we won't be able to send them to the session
+        mScreensharedView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mScreensharedView.loadUrl("https://tokbox.com");
+        mScreensharedView.getSettings().setJavaScriptEnabled(true);
 
         // initialize WebServiceCoordinator and kick off request for necessary data
         mWebServiceCoordinator = new WebServiceCoordinator(this, this);
@@ -78,6 +89,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private void initializePublisher() {
         mPublisher = new Publisher(this);
         mPublisher.setPublisherListener(this);
+        mPublisher.setCapturer(new ScreensharingCapturer(mScreensharedView));
         mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
         mPublisherViewContainer.addView(mPublisher.getView());
