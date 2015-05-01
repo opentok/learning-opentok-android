@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
+import com.opentok.android.Connection;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 import com.opentok.android.Subscriber;
@@ -18,7 +20,8 @@ import com.opentok.android.OpentokError;
 
 
 public class ChatActivity extends ActionBarActivity implements WebServiceCoordinator.Listener,
-        Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.SubscriberListener {
+        Session.SessionListener, PublisherKit.PublisherListener, SubscriberKit.SubscriberListener,
+        Session.SignalListener{
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
 
@@ -72,6 +75,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private void initializeSession() {
         mSession = new Session(this, mApiKey, mSessionId);
         mSession.setSessionListener(this);
+        mSession.setSignalListener(this);
         mSession.connect(mToken);
     }
 
@@ -114,6 +118,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         if (mPublisher != null) {
             mSession.publish(mPublisher);
         }
+
+        mSession.sendSignal("", "Hello, Signaling!");
     }
 
     @Override
@@ -183,5 +189,13 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     @Override
     public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
         logOpenTokError(opentokError);
+    }
+
+    /* Signal Listener methods */
+
+    @Override
+    public void onSignalReceived(Session session, String type, String data, Connection connection) {
+        Toast toast = Toast.makeText(this, data, Toast.LENGTH_LONG);
+        toast.show();
     }
 }
