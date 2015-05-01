@@ -15,12 +15,22 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/message_history_height"
+        android:id="@+id/message_history_list_view"
+        android:layout_above="@id/send_button"
+        android:layout_centerHorizontal="true"
+        android:transcriptMode="alwaysScroll"
+        android:layout_marginTop="@dimen/message_history_vertical_margin"
+        android:layout_marginBottom="@dimen/message_history_vertical_margin"/>
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/send_button"
-        android:id="@+id/video_container">
+        android:id="@+id/video_container"
+        android:layout_above="@id/message_history_list_view">
 
         <FrameLayout
             android:layout_width="fill_parent"
