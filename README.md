@@ -575,12 +575,13 @@ the received signal with the Connection object returned by `mSession.getConnecti
 
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
-    boolean remote = !connection.equals(mSession.getConnection());
-        switch (type) {
-            case SIGNAL_TYPE_MESSAGE:
-                showMessage(data);
-                showMessage(data, remote);
-                break;
+        if (connection != null) {
+            boolean remote = !connection.equals(mSession.getConnection());
+            switch (type) {
+                case SIGNAL_TYPE_CHAT:
+                    showMessage(data, remote);
+                    break;
+            }
         }
     }
 
