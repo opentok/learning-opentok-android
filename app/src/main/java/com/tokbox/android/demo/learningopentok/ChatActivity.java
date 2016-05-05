@@ -239,10 +239,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
-        switch (type) {
-            case SIGNAL_TYPE_CHAT:
-                showMessage(data);
-                break;
+        if (type.equals(SIGNAL_TYPE_CHAT) {
+            showMessage(data);
         }
     }
 }
