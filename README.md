@@ -31,7 +31,7 @@ The code for this sample is found the following git branches:
 
 * *basics.step-6* -- This branch shows you how to subscribe to a stream on the OpenTok session.
 
-* *archiving.step-1* -- This branch shows you how to record the session.
+* *archiving* -- This branch shows you how to record the session.
 
 * *signaling.step-1* -- This branch shows you how to use the OpenTok signaling API.
 
