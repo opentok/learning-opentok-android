@@ -34,6 +34,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private FrameLayout mPublisherViewContainer;
     private FrameLayout mSubscriberViewContainer;
 
+    private BlackWhiteVideoRender mSubscriberRenderer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
         mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
+
+        mSubscriberRenderer = new BlackWhiteVideoRender(this);
 
         // initialize WebServiceCoordinator and kick off request for necessary data
         mWebServiceCoordinator = new WebServiceCoordinator(this, this);
@@ -128,6 +132,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         if (mSubscriber == null) {
             mSubscriber = new Subscriber(this, stream);
             mSubscriber.setSubscriberListener(this);
+            mSubscriber.setRenderer(mSubscriberRenderer);
             mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                     BaseVideoRenderer.STYLE_VIDEO_FILL);
             mSession.subscribe(mSubscriber);
