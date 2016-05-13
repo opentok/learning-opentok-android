@@ -30,7 +30,7 @@ public class WebServiceCoordinator {
 
     public void fetchSessionConnectionData() {
         RequestQueue reqQueue = Volley.newRequestQueue(context);
-        reqQueue.add(new JsonObjectRequest(Request.Method.GET, SESSION_INFO_ENDPOINT, new Response.Listener<JSONObject>() {
+        reqQueue.add(new JsonObjectRequest(Request.Method.GET, SESSION_INFO_ENDPOINT, (String)null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
