@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
+import com.opentok.android.Publisher;
+import com.opentok.android.PublisherKit;
+import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
 
 
 public class ChatActivity extends ActionBarActivity implements WebServiceCoordinator.Listener,
-        Session.SessionListener {
+        Session.SessionListener, PublisherKit.PublisherListener {
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
 
@@ -22,11 +26,16 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     private String mSessionId;
     private String mToken;
     private Session mSession;
+    private Publisher mPublisher;
+
+    private FrameLayout mPublisherViewContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
 
         // initialize WebServiceCoordinator and kick off request for necessary data
         mWebServiceCoordinator = new WebServiceCoordinator(this, this);
@@ -61,6 +70,14 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         mSession.connect(mToken);
     }
 
+    private void initializePublisher() {
+        mPublisher = new Publisher(this);
+        mPublisher.setPublisherListener(this);
+        mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
+                BaseVideoRenderer.STYLE_VIDEO_FILL);
+        mPublisherViewContainer.addView(mPublisher.getView());
+    }
+
     private void logOpenTokError(OpentokError opentokError) {
         Log.e(LOG_TAG, "Error Domain: " + opentokError.getErrorDomain().name());
         Log.e(LOG_TAG, "Error Code: " + opentokError.getErrorCode().name());
@@ -75,6 +92,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         mToken = token;
 
         initializeSession();
+        initializePublisher();
     }
 
     @Override
@@ -87,6 +105,10 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     @Override
     public void onConnected(Session session) {
         Log.i(LOG_TAG, "Session Connected");
+
+        if (mPublisher != null) {
+            mSession.publish(mPublisher);
+        }
     }
 
     @Override
@@ -106,6 +128,23 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     @Override
     public void onError(Session session, OpentokError opentokError) {
+        logOpenTokError(opentokError);
+    }
+
+    /* Publisher Listener methods */
+
+    @Override
+    public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
+        Log.i(LOG_TAG, "Publisher Stream Created");
+    }
+
+    @Override
+    public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
+        Log.i(LOG_TAG, "Publisher Stream Destroyed");
+    }
+
+    @Override
+    public void onError(PublisherKit publisherKit, OpentokError opentokError) {
         logOpenTokError(opentokError);
     }
 }
