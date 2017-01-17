@@ -3,5 +3,8 @@
 
     <string name="app_name">Learning OpenTok</string>
     <string name="action_settings">Settings</string>
+    <string name="action_start_archive">Start Archive</string>
+    <string name="action_stop_archive">Stop Archive</string>
+    <string name="action_play_archive">Play Archive</string>
 
 </resources>
