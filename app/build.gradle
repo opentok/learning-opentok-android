@@ -1,4 +1,4 @@
-lsapply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 apply from: 'config.gradle'
 
 android {
