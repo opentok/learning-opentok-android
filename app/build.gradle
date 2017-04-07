@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply from: 'config.gradle'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.tokbox.android.demo.learningopentok"
@@ -24,7 +25,12 @@ android {
     }
 }
 
+android.buildTypes.each { type ->
+    type.buildConfigField 'String', 'CHAT_SERVER_URL', "\"$chatServerUrl\""
+}
+
 dependencies {
     compile 'com.opentok.android:opentok-android-sdk:2.10.+'
     compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'com.mcxiaoke.volley:library:1.0.15@aar'
 }
