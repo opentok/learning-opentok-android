@@ -3,7 +3,7 @@ apply from: 'config.gradle'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.tokbox.android.demo.learningopentok"
