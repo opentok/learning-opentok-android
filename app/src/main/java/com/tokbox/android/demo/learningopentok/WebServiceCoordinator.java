@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class WebServiceCoordinator {
 
-    private static final String CHAT_SERVER_URL = BuildConfig.CHAT_SERVER_URL;
+    private static final String CHAT_SERVER_URL = "https://yoursubdomain.herokuapp.com";
     private static final String SESSION_INFO_ENDPOINT = CHAT_SERVER_URL + "/session";
 
     private static final String LOG_TAG = WebServiceCoordinator.class.getSimpleName();
@@ -30,7 +30,7 @@ public class WebServiceCoordinator {
 
     public void fetchSessionConnectionData() {
         RequestQueue reqQueue = Volley.newRequestQueue(context);
-        reqQueue.add(new JsonObjectRequest(Request.Method.GET, SESSION_INFO_ENDPOINT, new Response.Listener<JSONObject>() {
+        reqQueue.add(new JsonObjectRequest(Request.Method.GET, SESSION_INFO_ENDPOINT, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
