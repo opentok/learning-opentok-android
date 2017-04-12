@@ -23,13 +23,7 @@ https://tokbox.com/developer/tutorials/android/.
 
 The code for this sample is found the following git branches:
 
-* *basics.step-1* -- This branch shows you how to set up your project to use the OpenTok Android SDK.
-
-* *basics.step-4* -- This branch shows you how to connect to the OpenTok session.
-
-* *basics.step-5* -- This branch shows you how publish a stream to the OpenTok session.
-
-* *basics.step-6* -- This branch shows you how to subscribe to a stream on the OpenTok session.
+* *basics.completed* -- This branch contains a completed version of the [Basic Video Chat Tutorial](https://tokbox.com/developer/tutorials/android/basic-video-chat/).
 
 * *archiving* -- This branch shows you how to record the session.
 
