@@ -70,13 +70,13 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     }
 
     private void initializeSession() {
-        mSession = new Session(this, mApiKey, mSessionId);
+        mSession = (new Session.Builder(this, mApiKey, mSessionId).build());
         mSession.setSessionListener(this);
         mSession.connect(mToken);
     }
 
     private void initializePublisher() {
-        mPublisher = new Publisher(this);
+        mPublisher = (new Publisher.Builder(this)).build();
         mPublisher.setPublisherListener(this);
         mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
@@ -126,7 +126,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         Log.i(LOG_TAG, "Stream Received");
 
         if (mSubscriber == null) {
-            mSubscriber = new Subscriber(this, stream);
+            mSubscriber = (new Subscriber.Builder(this, stream)).build();
             mSubscriber.setSubscriberListener(this);
             mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                     BaseVideoRenderer.STYLE_VIDEO_FILL);
