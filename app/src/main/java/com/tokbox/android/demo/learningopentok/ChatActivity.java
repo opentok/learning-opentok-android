@@ -22,6 +22,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
 
+    // Suppressing this warning. mWebServiceCoordinator will get GarbageCollected if it is local.
+    @SuppressWarnings("FieldCanBeLocal")
     private WebServiceCoordinator mWebServiceCoordinator;
 
     private String mApiKey;
