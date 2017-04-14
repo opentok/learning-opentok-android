@@ -79,8 +79,11 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     }
 
     private void initializePublisher() {
+        // initialize Publisher and set this object to listen to Publisher events
         mPublisher = (new Publisher.Builder(this)).build();
         mPublisher.setPublisherListener(this);
+
+        // set publisher video style to fill view
         mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
         mPublisherViewContainer.addView(mPublisher.getView());
