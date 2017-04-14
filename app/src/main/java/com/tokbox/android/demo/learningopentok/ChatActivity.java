@@ -41,6 +41,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        // initialize view objects from your layout
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
         mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
 
