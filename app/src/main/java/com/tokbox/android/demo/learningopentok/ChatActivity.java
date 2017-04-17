@@ -73,14 +73,14 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     }
 
     private void initializeSession() {
-        mSession = (new Session.Builder(this, mApiKey, mSessionId).build());
+        mSession = new Session.Builder(this, mApiKey, mSessionId).build();
         mSession.setSessionListener(this);
         mSession.connect(mToken);
     }
 
     private void initializePublisher() {
         // initialize Publisher and set this object to listen to Publisher events
-        mPublisher = (new Publisher.Builder(this)).build();
+        mPublisher = new Publisher.Builder(this).build();
         mPublisher.setPublisherListener(this);
 
         // set publisher video style to fill view
@@ -132,7 +132,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         Log.i(LOG_TAG, "Stream Received");
 
         if (mSubscriber == null) {
-            mSubscriber = (new Subscriber.Builder(this, stream)).build();
+            mSubscriber = new Subscriber.Builder(this, stream).build();
             mSubscriber.setSubscriberListener(this);
             mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                     BaseVideoRenderer.STYLE_VIDEO_FILL);
