@@ -23,7 +23,7 @@ https://tokbox.com/developer/tutorials/android/.
 
 The code for this sample is found the following git branches:
 
-* *basics.completed* -- This branch contains a completed version of the [Basic Video Chat Tutorial](https://tokbox.com/developer/tutorials/android/basic-video-chat/).
+* *basics* -- This branch contains a completed version of the [Basic Video Chat Tutorial](https://tokbox.com/developer/tutorials/android/basic-video-chat/).
 
 * *archiving* -- This branch shows you how to record the session.
 
