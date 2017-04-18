@@ -3,7 +3,7 @@ apply from: 'config.gradle'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.tokbox.android.demo.learningopentok"
@@ -32,5 +32,5 @@ android.buildTypes.each { type ->
 dependencies {
     compile 'com.opentok.android:opentok-android-sdk:2.10.+'
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.mcxiaoke.volley:library:1.0.15@aar'
+    compile 'com.android.volley:volley:1.0.0'
 }

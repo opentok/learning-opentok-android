@@ -22,6 +22,8 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
 
     private static final String LOG_TAG = ChatActivity.class.getSimpleName();
 
+    // Suppressing this warning. mWebServiceCoordinator will get GarbageCollected if it is local.
+    @SuppressWarnings("FieldCanBeLocal")
     private WebServiceCoordinator mWebServiceCoordinator;
 
     private String mApiKey;
@@ -39,6 +41,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        // initialize view objects from your layout
         mPublisherViewContainer = (FrameLayout)findViewById(R.id.publisher_container);
         mSubscriberViewContainer = (FrameLayout)findViewById(R.id.subscriber_container);
 
@@ -70,14 +73,17 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
     }
 
     private void initializeSession() {
-        mSession = new Session(this, mApiKey, mSessionId);
+        mSession = new Session.Builder(this, mApiKey, mSessionId).build();
         mSession.setSessionListener(this);
         mSession.connect(mToken);
     }
 
     private void initializePublisher() {
-        mPublisher = new Publisher(this);
+        // initialize Publisher and set this object to listen to Publisher events
+        mPublisher = new Publisher.Builder(this).build();
         mPublisher.setPublisherListener(this);
+
+        // set publisher video style to fill view
         mPublisher.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
         mPublisherViewContainer.addView(mPublisher.getView());
@@ -126,7 +132,7 @@ public class ChatActivity extends ActionBarActivity implements WebServiceCoordin
         Log.i(LOG_TAG, "Stream Received");
 
         if (mSubscriber == null) {
-            mSubscriber = new Subscriber(this, stream);
+            mSubscriber = new Subscriber.Builder(this, stream).build();
             mSubscriber.setSubscriberListener(this);
             mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                     BaseVideoRenderer.STYLE_VIDEO_FILL);
