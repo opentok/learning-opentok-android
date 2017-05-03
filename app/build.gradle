@@ -30,7 +30,7 @@ android.buildTypes.each { type ->
 }
 
 dependencies {
-    compile 'com.opentok.android:opentok-android-sdk:2.10.+'
+    compile 'com.opentok.android:opentok-android-sdk:2.11.0'
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.mcxiaoke.volley:library:1.0.15@aar'
 }
