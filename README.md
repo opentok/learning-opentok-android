@@ -1,5 +1,6 @@
-Learning OpenTok Android Sample App
-===================================
+# Learning OpenTok Android Sample App
+
+<img src="https://assets.tokbox.com/img/vonage/Vonage_VideoAPI_black.svg" height="48px" alt="Tokbox is now known as Vonage" />
 
 This sample app shows how to accomplish basic tasks using the
 [OpenTok Android SDK](https://tokbox.com/opentok/libraries/client/android/).
@@ -51,3 +52,20 @@ signaling API.
 
 * *screensharing* -- This branch shows you how to use the device's screen (instead of a
   camera) as the video source for a published stream.
+
+## Development and Contributing
+
+Interested in contributing? We :heart: pull requests! See the [Contribution](CONTRIBUTING.md) guidelines.
+
+## Getting Help
+
+We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
+
+- Open an issue on this repository
+- See <https://support.tokbox.com/> for support options
+- Tweet at us! We're [@VonageDev](https://twitter.com/VonageDev) on Twitter
+- Or [join the Vonage Developer Community Slack](https://developer.nexmo.com/community/slack)
+
+## Further Reading
+
+- Check out the Developer Documentation at <https://tokbox.com/developer/>
