@@ -1,4 +1,7 @@
-# Learning OpenTok Android Sample App
+# ⚠️ This repository is no longer maintained. If you are looking for OpenTok Android SDK samples please check the [opentok-android-sdk-samples](https://github.com/opentok/opentok-android-sdk-samples) repository.
+
+
+## Learning OpenTok Android Sample App
 
 <img src="https://assets.tokbox.com/img/vonage/Vonage_VideoAPI_black.svg" height="48px" alt="Tokbox is now known as Vonage" />
 
